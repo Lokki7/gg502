@@ -61,9 +61,9 @@ class MapCreator {
           if(busy) {
             this.map[x][y] = 1;
 
-            const R = 25 / this.scale;
+            const R = 4;
 
-            for(let dy = -R; dy < R * 0.5; dy++) {
+            for(let dy = -R; dy < R; dy++) {
               for (let dx = -R; dx < R; dx++) {
                 if (dx * dx + dy * dy > R * R) continue;
                 if (x + dx < 0 || y + dy < 0) continue;

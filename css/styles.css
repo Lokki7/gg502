@@ -17,8 +17,16 @@ h1, h2 {
     margin: 6px;
 }
 
+.title {
+    z-index: 10;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
 .main-image {
-    margin: 100px;
+    margin: 150px 100px;
+    z-index: 1;
 }
 
 .bot {
