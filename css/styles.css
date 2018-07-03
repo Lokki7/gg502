@@ -23,10 +23,10 @@ h1, h2 {
 
 .bot {
     position: absolute;
-    width: 60px;
+    width: 66px;
     height: 60px;
     background: url('/assets/b6.gif') no-repeat;
-    transform: translate(-30px, -30px);
+    transform: translate(-33px, -30px);
     /*transition: left 1s linear, top 1s linear;*/
 }
 

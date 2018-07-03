@@ -1,23 +1,30 @@
 class Bot {
 
-  constructor(selector) {
+  constructor(selector, startPosition) {
     this.elem = document.querySelector(selector);
 
-    this.startPosition = {x: Math.round(window.innerWidth / 2) - 180, y: Math.round(window.innerHeight / 2) + 70};
+    this.startPosition = startPosition;
 
     this.botPosition = {x: this.startPosition.x, y: this.startPosition.y};
-    this.mousePosition = {x: this.startPosition.x, y: this.startPosition.y};
+    this.targetPosition = {x: this.startPosition.x, y: this.startPosition.y};
 
     this.speed = 1;
 
-    this.bindMouse();
     this.placeInPosition();
+    this.arrivedCallback = () => {};
 
-    this.idleTimeout = 0;
+    // this.idleTimeout = 0;
 
-    setTimeout(() => {
-      this.move();
-    }, 1000);
+    this.move();
+  }
+
+  display() {
+    this.elem.style.display = 'block';
+  }
+
+  goTo(x ,y) {
+    this.targetPosition = {x, y};
+    return new Promise(resolve => this.arrivedCallback = resolve);
   }
 
   placeInPosition() {
@@ -25,60 +32,69 @@ class Bot {
     this.elem.style.left = this.botPosition.x + 'px';
   }
 
-  bindMouse() {
-    let func = throttle((e) => this.onMouseMove(e), 100);
-    document.addEventListener('mousemove', func);
-  }
+  // bindMouse() {
+  //   let func = throttle((e) => this.onMouseMove(e), 100);
+  //   document.addEventListener('mousemove', func);
+  // }
 
-  onMouseMove(event) {
-    this.mousePosition = {x: event.pageX, y: event.pageY};
-    this.rotate();
-  }
+  // onMouseMove(event) {
+  //   this.mousePosition = {x: event.pageX, y: event.pageY};
+  //   this.rotate();
+  // }
 
-  moveBack() {
-    this.mousePosition = {x: this.startPosition.x, y: this.startPosition.y};
-  }
+  // moveBack() {
+  //   this.mousePosition = {x: this.startPosition.x, y: this.startPosition.y};
+  // }
 
   move() {
-    requestAnimationFrame(() => this.move());
+    setTimeout(() => this.move(), 7);
 
     let direction = this.getMouseDirection();
 
     if (!direction.length) {
-      if (!this.idleTimeout) {
-        this.idleTimeout = setTimeout(() => this.moveBack(), 5000);
-      }
+      this.arrivedCallback();
+
+      // if (!this.idleTimeout) {
+      //   this.idleTimeout = setTimeout(() => this.moveBack(), 5000);
+      // }
       return;
     }
+
+    let hasDir = side => direction.includes(side);
 
     clearTimeout(this.idleTimeout);
     this.idleTimeout = false;
 
-    if (direction.includes('up')) {
-      this.botPosition.y -= this.speed;
+    let yModifier = !hasDir('left') && !hasDir('right') ? 1 : 0.5;
+
+    if (hasDir('up')) {
+      this.botPosition.y -= this.speed * yModifier;
     }
-    if (direction.includes('down')) {
-      this.botPosition.y += this.speed;
+    if (hasDir('down')) {
+      this.botPosition.y += this.speed * yModifier;
     }
-    if (direction.includes('right')) {
+    if (hasDir('right')) {
       this.botPosition.x += this.speed;
     }
-    if (direction.includes('left')) {
+    if (hasDir('left')) {
       this.botPosition.x -= this.speed;
     }
 
     this.placeInPosition();
-    this.rotate();
+    this.rotate(direction);
   }
 
-  rotate() {
-    let direction = this.getMouseDirection();
+
+  rotate(direction) {
     this.elem.className = 'bot ' + direction.join('-');
   }
 
   getMouseDirection() {
-    let verticalDirection = this.mousePosition.y == this.botPosition.y ? '' : (this.mousePosition.y < this.botPosition.y ? 'up' : 'down');
-    let horizontalDirection = this.mousePosition.x == this.botPosition.x ? '' : (this.mousePosition.x < this.botPosition.x ? 'left' : 'right');
+    let verticalDiff = Math.floor(this.targetPosition.y - this.botPosition.y);
+    let horizontalDiff = Math.floor(this.targetPosition.x - this.botPosition.x);
+
+    let verticalDirection = verticalDiff == 0 ? '' : (verticalDiff < 0 ? 'up' : 'down');
+    let horizontalDirection = horizontalDiff == 0 ? '' : (horizontalDiff < 0 ? 'left' : 'right');
 
     return [verticalDirection, horizontalDirection].filter(v => v);
   }

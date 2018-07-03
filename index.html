@@ -5,21 +5,23 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&amp;subset=cyrillic" rel="stylesheet">
     <script src="/js/func.js"></script>
     <script src="/js/bot.js"></script>
-
+    <script src="/js/map.js"></script>
+    <script src="/js/pathfinding-browser.min.js"></script>
 </head>
 
 <body>
 
 <div class="content">
-    <h1>Ошибка 502</h1>
+    <h1>Ошибка</h1>
     <h2>Технические работы</h2>
 
     <div class="main-image">
-        <img src="/assets/502.gif">
-
-        <div class="bot" id="bot1"></div>
+        <img id="bgimg" src="/assets/502.gif">
+        <div class="bot" id="bot1" style="display: none"></div>
     </div>
 </div>
+
+<canvas id="canvas" style="position: absolute; top: 0; opacity: 0; transform: scale(5) translate(40%, 41%);"></canvas>
 
 <script src="/js/main.js"></script>
 
