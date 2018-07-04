@@ -33,17 +33,17 @@ h1, h2 {
     position: absolute;
     width: 66px;
     height: 60px;
-    background: url('/assets/b6.gif') no-repeat;
+    background: url('../assets/b6.gif') no-repeat;
     transform: translate(-33px, -30px);
     /*transition: left 1s linear, top 1s linear;*/
 }
 
-.bot.up { background-image: url('/assets/b2.gif'); }
-.bot.down { background-image: url('/assets/b5.gif'); }
-.bot.left { background-image: url('/assets/b7.gif'); }
-.bot.right { background-image: url('/assets/b8.gif'); }
+.bot.up { background-image: url('../assets/b2.gif'); }
+.bot.down { background-image: url('../assets/b5.gif'); }
+.bot.left { background-image: url('../assets/b7.gif'); }
+.bot.right { background-image: url('../assets/b8.gif'); }
 
-.bot.up-right { background-image: url('/assets/b3.gif'); }
-.bot.up-left { background-image: url('/assets/b1.gif'); }
-.bot.down-left { background-image: url('/assets/b6.gif'); }
-.bot.down-right { background-image: url('/assets/b4.gif'); }
+.bot.up-right { background-image: url('../assets/b3.gif'); }
+.bot.up-left { background-image: url('../assets/b1.gif'); }
+.bot.down-left { background-image: url('../assets/b6.gif'); }
+.bot.down-right { background-image: url('../assets/b4.gif'); }
