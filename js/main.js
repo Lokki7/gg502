@@ -1,4 +1,4 @@
-const debug = 0;
+const debug = window.location.hash == '#debug';
 
 let img = document.querySelector('#bgimg');
 
@@ -11,7 +11,15 @@ img.addEventListener('load', async (e) => {
   let canvas = document.querySelector('#canvas');
   if(debug) mapToCanvas(mapCreator.map, canvas);
 
-  let startPosition = {x: Math.round(window.innerWidth / 2) - 180, y: Math.round(window.innerHeight / 2) + 70};
+  let startPosition;
+  let walkable = false;
+  startPosition = {x: Math.round(window.innerWidth / 2) - 180, y: Math.round(window.innerHeight / 2) + 70};
+
+  while(!walkable) {
+    startPosition.y--;
+    walkable = mapCreator.map[Math.floor(startPosition.x / mapCreator.scale)][Math.floor(startPosition.y / mapCreator.scale)] == 0;
+    console.log(startPosition.y, walkable);
+  }
 
   let bot = new Bot('#bot1', startPosition);
   bot.display();
