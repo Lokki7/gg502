@@ -28,7 +28,8 @@ class Bot {
   }
 
   abort() {
-    this.targetPosition = {...this.botPosition};
+    // this.arrivedCallback();
+    // this.targetPosition = {...this.botPosition};
   }
 
   placeInPosition() {
@@ -59,15 +60,15 @@ class Bot {
       this.arrivedCallback();
 
       // if (!this.idleTimeout) {
-      //   this.idleTimeout = setTimeout(() => this.moveBack(), 5000);
+        // this.idleTimeout = setTimeout(() => this.rotate([]), 500);
       // }
       return;
     }
 
     let hasDir = side => direction.includes(side);
 
-    clearTimeout(this.idleTimeout);
-    this.idleTimeout = false;
+    // clearTimeout(this.idleTimeout);
+    // this.idleTimeout = false;
 
     let yModifier = !hasDir('left') && !hasDir('right') ? 1 : 0.5;
 

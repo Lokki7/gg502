@@ -32,20 +32,23 @@ img.addEventListener('load', async (e) => {
     let newGrid = grid.clone();
     let finder = new PF.AStarFinder({allowDiagonal: true, heuristic: PF.Heuristic.euclidean});
 
+    let startPosition = [Math.floor(bot.targetPosition.y / mapCreator.scale), Math.floor(bot.targetPosition.x / mapCreator.scale)];
+    let currentPosition = [Math.floor(bot.botPosition.y / mapCreator.scale), Math.floor(bot.botPosition.x / mapCreator.scale)];
+
     let newPath = finder.findPath(
-      Math.floor(bot.botPosition.y / mapCreator.scale),
-      Math.floor(bot.botPosition.x / mapCreator.scale),
+      startPosition[0],
+      startPosition[1],
       Math.floor(e.pageY / mapCreator.scale),
       Math.floor(e.pageX / mapCreator.scale),
       newGrid);
 
     if(newPath.length) {
       path = PF.Util.smoothenPath(newGrid, newPath);
-      bot.abort();
+      // bot.abort();
 
       if(debug) {
         mapToCanvas(mapCreator.map, canvas);
-        drawPath(path, canvas);
+        drawPath([currentPosition, startPosition, ...path], canvas);
       }
     }
   };
@@ -103,7 +106,7 @@ function drawPath(path, canvas) {
   ctx.beginPath();
   ctx.moveTo(path[1], path[0]);
 
-  path.shift();
+  // path.shift();
   path.forEach(dot => ctx.lineTo(dot[1], dot[0]));
   ctx.strokeStyle="#00FF00";
   ctx.lineWidth = 1;
