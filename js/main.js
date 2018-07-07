@@ -33,14 +33,15 @@ img.addEventListener('load', async (e) => {
     let finder = new PF.AStarFinder({allowDiagonal: true, heuristic: PF.Heuristic.euclidean});
 
     let newPath = finder.findPath(
-      Math.floor(bot.targetPosition.y / mapCreator.scale),
-      Math.floor(bot.targetPosition.x / mapCreator.scale),
+      Math.floor(bot.botPosition.y / mapCreator.scale),
+      Math.floor(bot.botPosition.x / mapCreator.scale),
       Math.floor(e.pageY / mapCreator.scale),
       Math.floor(e.pageX / mapCreator.scale),
       newGrid);
 
     if(newPath.length) {
       path = PF.Util.smoothenPath(newGrid, newPath);
+      bot.abort();
 
       if(debug) {
         mapToCanvas(mapCreator.map, canvas);
@@ -51,7 +52,6 @@ img.addEventListener('load', async (e) => {
 
   let func = throttle((e) => mouseMove(e), 100);
   document.addEventListener('mousemove', func);
-
 
   // for (let x = 0; x < path.length; x++) {
   //   if(x % 2) continue;

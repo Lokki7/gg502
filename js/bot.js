@@ -5,8 +5,8 @@ class Bot {
 
     this.startPosition = startPosition;
 
-    this.botPosition = {x: this.startPosition.x, y: this.startPosition.y};
-    this.targetPosition = {x: this.startPosition.x, y: this.startPosition.y};
+    this.botPosition = {...this.startPosition};
+    this.targetPosition = {...this.startPosition};
 
     this.speed = 1;
 
@@ -25,6 +25,10 @@ class Bot {
   goTo(x ,y) {
     this.targetPosition = {x, y};
     return new Promise(resolve => this.arrivedCallback = resolve);
+  }
+
+  abort() {
+    this.targetPosition = {...this.botPosition};
   }
 
   placeInPosition() {

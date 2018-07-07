@@ -61,7 +61,7 @@ class MapCreator {
           if(busy) {
             this.map[x][y] = 1;
 
-            const R = 4;
+            const R = 3;
 
             for(let dy = -R; dy < R; dy++) {
               for (let dx = -R; dx < R; dx++) {
